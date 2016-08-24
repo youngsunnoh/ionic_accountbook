@@ -1,7 +1,8 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout,dateFilter) {
-
+.controller('AppCtrl', function($scope, $ionicModal, $timeout,dateFilter,$location) {
+    $scope.day_total = 0; // 24시간 지출 계산
+    $scope.month_total = 0; // 30일 지출 계ㅅ
   // Form data for the login modal
   $scope.loginData = {};
   $scope.date = '2013-11-26';
@@ -19,17 +20,17 @@ angular.module('starter.controllers', [])
   $scope.closeLogin = function() {
     $scope.modal.hide();
   };
-
+  
   // Open the login modal
   $scope.login = function() {
-      var currentNow = new Date();
-      $scope.test = currentNow.getFullYear();
-      $scope.test2 = currentNow.getHours();
-      $scope.test3 = currentNow.getMinutes();
-      
     $scope.modal.show();
   };
-
+  $scope.plus = function(plus1){ // 배열로 day값을 넣고 그날 배열의 합만 불러온다.
+      var currentNow = new Date();
+      $scope.day = currentNow.getDate();
+      $scope.total1 += plus1;
+      $location.path("/app/search");
+  }
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
     console.log('Doing login', $scope.loginData);
@@ -42,7 +43,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope,$ionicPopover) {
+.controller('PlaylistsCtrl', function($scope,$ionicPopover,$location) {
     var currentNow = new Date();
     $scope.test = currentNow.getFullYear();
     $scope.test1 = currentNow.getMonth() + 1;
@@ -77,9 +78,8 @@ angular.module('starter.controllers', [])
      $scope.$on('popover.removed', function() {
         // Execute action
      });
-    
-    
-    
+     
+     
   $scope.settingsList = [
     { text: 'Taxi', id: 1 },
     { text: 'Price', id: 2 },
