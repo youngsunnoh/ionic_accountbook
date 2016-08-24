@@ -1,10 +1,85 @@
-<ion-view view-title="Playlists">
+<ion-view cache-view="false" view-title="{{test}}-{{test1}}-{{test2}}  {{test3}}:{{test4}}">
+<script id = "popover.html" type = "text/ng-template">
+   <ion-popover-view>
+        <ion-toggle ng-repeat="item in settingsList"
+                    ng-model="item.checked" 
+                    ng-checked="item.checked">
+          {{ item.text }}
+        </ion-toggle>
+        
+   </ion-popover-view>
+</script>
   <ion-content>
-    <ion-list>
+    <!-- <ion-list>
       <ion-item ng-repeat="playlist in playlists" href="#/app/playlists/{{playlist.id}}">
         {{playlist.title}}
       </ion-item>
-    </ion-list>
+    </ion-list> -->
+  <!--  <label class="item item-input item-stacked-label">
+   <div class= "row">
+   <div class="col-20">
+   <span class="input-label">Label 1</span>
+   </div>
+   <div class="col-50">
+   <input type="text" placeholder="Placeholder 1">
+   </div>
+   </div>
+   </label> -->
+    <div class="list">
+   <div class="item item-input-inset">
+      <label class="item item-input-wrapper">       
+      <input type="text" placeholder="Placeholder 1">
+      </label>
+      <button class="button button-icon ion-more" ng-click="popover.show($event)"></button>
+   </div>
+
+  <div class="list">
+   <div class="item item-input-inset">
+      <label class="item item-input-wrapper">       
+      <input type="text" placeholder="Placeholder 1">
+      </label>
+      <button class="button">button</button>
+   </div>
+      <div class="item item-divider"> 
+          Category
+        </div>
+        
+        <ion-toggle ng-repeat="item in settingsList"
+                    ng-model="item.checked" 
+                    ng-checked="item.checked">
+          {{ item.text }}
+        </ion-toggle>
+    
+        <div class="item item-divider" style="background-color:skyblue;text-align:center;"> 
+          <button class="button" style="background-color:skyblue;width:100%;color:white;">Commit</button>
+        </div>
+       <!--  <div class="item">
+          <pre ng-bind="settingsList | json"></pre> 
+        </div> -->
+        
+      <!--   <div class="item item-divider"> 
+          Notifications
+        </div>
+        
+        <ion-toggle ng-model="pushNotification.checked"
+                    ng-change="pushNotificationChange()">
+          Push Notifications
+        </ion-toggle>
+        
+        <div class="item">
+          <pre ng-bind="pushNotification | json"></pre> 
+        </div>
+        
+        <ion-toggle toggle-class="toggle-assertive"
+                    ng-model="emailNotification"
+                    ng-true-value="'Subscribed'"
+                    ng-false-value="'Unubscribed'">
+          Newsletter
+        </ion-toggle>
+        
+        <div class="item">
+          <pre ng-bind="emailNotification | json"></pre> 
+        </div> -->
+        
   </ion-content>
 </ion-view>
-

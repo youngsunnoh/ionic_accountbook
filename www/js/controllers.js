@@ -9,7 +9,7 @@ angular.module('starter.controllers', [])
   $scope.maxDate = '2014-12-04';
   $scope.disabledDates = ['2013-11-19', '2013-11-30'];
   // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
+  $ionicModal.fromTemplateUrl('templates/calendar.html', {
     scope: $scope
   }).then(function(modal) {
     $scope.modal = modal;
@@ -22,6 +22,11 @@ angular.module('starter.controllers', [])
 
   // Open the login modal
   $scope.login = function() {
+      var currentNow = new Date();
+      $scope.test = currentNow.getFullYear();
+      $scope.test2 = currentNow.getHours();
+      $scope.test3 = currentNow.getMinutes();
+      
     $scope.modal.show();
   };
 
@@ -37,14 +42,47 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
+.controller('PlaylistsCtrl', function($scope,$ionicPopover) {
+    var currentNow = new Date();
+    $scope.test = currentNow.getFullYear();
+    $scope.test1 = currentNow.getMonth() + 1;
+    $scope.test2 = currentNow.getDate();
+    $scope.test3 = currentNow.getHours();
+    $scope.test4 = currentNow.getMinutes();
+    $ionicPopover.fromTemplateUrl('popover.html', {
+        scope: $scope
+     }).then(function(popover) {
+        $scope.popover = popover;
+     });
+
+     $scope.openPopover = function($event) {
+        $scope.popover.show($event);
+     };
+
+     $scope.closePopover = function() {
+        $scope.popover.hide();
+     };
+
+     //Cleanup the popover when we're done with it!
+     $scope.$on('$destroy', function() {
+        $scope.popover.remove();
+     });
+
+     // Execute action on hide popover
+     $scope.$on('popover.hidden', function() {
+        // Execute action
+     });
+
+     // Execute action on remove popover
+     $scope.$on('popover.removed', function() {
+        // Execute action
+     });
+    
+    
+    
+  $scope.settingsList = [
+    { text: 'Taxi', id: 1 },
+    { text: 'Price', id: 2 },
   ];
 })
 
