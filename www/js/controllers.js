@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout,dateFilter,$location) {
-    $scope.day_total = 0; // 24시간 지출 계산
+    $scope.day_total = []; // 24시간 지출 계산
     $scope.month_total = 0; // 30일 지출 계산
     
     var currentNow = new Date();
@@ -13,7 +13,7 @@ angular.module('starter.controllers', [])
     
     $scope.$watch('day', function (newValue, oldValue) { //day 스코프 변경되기전 값 변경후 값을 watch로 걸러낼수 있다.
         if (newValue != oldValue)
-            $scope.day_total = 0;
+            $scope.day_total = [];
             console.log($scope.day_total);
         }, true);
   // Form data for the login modal
@@ -38,10 +38,21 @@ angular.module('starter.controllers', [])
   $scope.login = function() {
     $scope.modal.show();
   };
-  $scope.plus = function(plus1){ // 배열로 day값을 넣고 그날 배열의 합만 불러온다.
-      /* var currentNow = new Date();
-      $scope.day = currentNow.getDate();*/
-      $scope.day_total += plus1;
+  $scope.plus = function(price){ // 배열로 day값을 넣고 그날 배열의 합만 불러온다.(카테고리,날짜시간,금액)
+      var currentNow = new Date();
+      $scope.day = currentNow.getDate();
+      var plus_array = {category : 'taxi' , day: $scope.day , price: price}
+      $scope.day_total.push(plus_array); //현재날짜 카테고리별로 금액을 배열로 저장한다.
+      for(var i = 0; i < $scope.day_total.length; i++){
+          if($scope.day_total.day == 24){
+              $scope.day_total += $scope.day_total[i].price;
+              console.log($scope.day_total);
+          }
+      }
+      
+      
+      
+      console.log($scope.day_total);
       $location.path("/app/search");
   }
   // Perform the login action when the user submits the login form
