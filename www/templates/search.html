@@ -1,5 +1,9 @@
-<ion-view view-title="Search">
+<ion-view view-title="일별">
   <ion-content>
-    <h1>{{day_total}}</h1>
+   <ion-list>
+      <ion-item ng-repeat="select in select track by $index">
+        {{select.category}}{{select.price}}{{select.date}}
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>

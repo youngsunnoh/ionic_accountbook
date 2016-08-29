@@ -31,9 +31,9 @@
       </label>
       <button class="button">button</button>
     </div>
-    <div class="item item-divider">Category</div>
-    <ion-toggle ng-repeat="item in settingsList" ng-model="item.checked" ng-checked="item.checked"> {{ item.text }} </ion-toggle>
-    </div>
+    <!-- <div class="item item-divider">Category</div>
+    <ion-toggle ng-repeat="item in settingsList" ng-model="item.checked" ng-checked="item.checked" ng-change="category(item.text)"> {{ item.text }} </ion-toggle>
+    </div> -->
  <ion-item style="background-color: skyblue; color: white;font-size:20px;" ng-click="plus(price1)">
           <h1 style="text-align:center;color:white;">??</h1>
  </ion-item>
@@ -75,7 +75,7 @@
         
         <ion-radio ng-repeat="item in settingsList"
                    ng-value="item.text"
-                   ng-model="data.clientSide" ng-change="checkbox(data.clientSide)">
+                   ng-model="data.clientSide" ng-change="checkbox(item)">
           {{ item.text }}
         </ion-radio>
       <div class="item item-input-inset" ng-show="inputshow == 1">
