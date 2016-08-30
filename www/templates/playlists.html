@@ -22,14 +22,15 @@
     <label class="item item-input-wrapper"> 
     <input type="number" placeholder="-" ng-model="price1">
     </label>
-    <button class="button button-icon ion-more" ng-click="popover.show($event)"></button>
+    <button class="button button-icon ion-more" ng-click="openPopover($event,1)"></button>
   </div>
 
   <div class="list">
     <div class="item item-input-inset">
-      <label class="item item-input-wrapper"> <input type="number" placeholder="+" ng-model="price2">
+      <label class="item item-input-wrapper"> 
+      <input type="number" placeholder="+" ng-model="price2">
       </label>
-      <button class="button">button</button>
+      <button class="button button-icon ion-more" ng-click="openPopover($event,2)"></button>
     </div>
     <!-- <div class="item item-divider">Category</div>
     <ion-toggle ng-repeat="item in settingsList" ng-model="item.checked" ng-checked="item.checked" ng-change="category(item.text)"> {{ item.text }} </ion-toggle>
@@ -67,13 +68,32 @@
 </ion-content> </ion-view>
 <script id="popover.html" type="text/ng-template">
 <ion-popover-view>
-<ion-content>
+<ion-content ng-show="type == 1">
       <div class="list">
         <!-- <div class="item item-divider"> 
           {{ data.clientSide }}
         </div>  데이터 바인딩 확인--> 
         
-        <ion-radio ng-repeat="item in settingsList"
+        <ion-radio ng-repeat="item in expenditureList"
+                   ng-value="item.text"
+                   ng-model="data.clientSide" ng-change="checkbox(item)">
+          {{ item.text }}
+        </ion-radio>
+      <div class="item item-input-inset" ng-show="inputshow == 1">
+      <label class="item item-input-wrapper"> 
+      <input type="text" placeholder="Placeholder 1" ng-model="price2" style="padding-left:0px;">
+      </label>
+      <button class="button">button</button>
+    </div>
+</div>
+</ion-content>
+<ion-content ng-show="type == 2">
+      <div class="list">
+        <!-- <div class="item item-divider"> 
+          {{ data.clientSide }}
+        </div>  데이터 바인딩 확인--> 
+        
+        <ion-radio ng-repeat="item in incomeList"
                    ng-value="item.text"
                    ng-model="data.clientSide" ng-change="checkbox(item)">
           {{ item.text }}

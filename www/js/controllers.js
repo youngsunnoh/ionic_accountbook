@@ -12,10 +12,10 @@ angular.module('starter.controllers', [])
     
     //지출리스트
     $scope.expenditureList = [ 
-                           { text: 'Taxi', id: 1 },
-                           { text: 'Sic', id: 2 },
-                           { text: 'Bus', id: 3 },
-                           { text: 'Caffe', id: 4 },
+                           { text: '택시', id: 1 },
+                           { text: '식비', id: 2 },
+                           { text: '버스', id: 3 },
+                           { text: '커피', id: 4 },
                            { text: '직접입력', id: 5 }
                          ];
     //수입리스트
@@ -120,17 +120,19 @@ angular.module('starter.controllers', [])
 })
 
 .controller('PlaylistsCtrl', function($scope,$ionicPopover,$location,$cordovaSQLite) {
-    $scope.data = {
-            clientSide: 'ng'
-          };
     $ionicPopover.fromTemplateUrl('popover.html', {
         scope: $scope
      }).then(function(popover) {
         $scope.popover = popover;
      });
 
-     $scope.openPopover = function($event) {
-        $scope.popover.show($event);
+     $scope.openPopover = function($event,type) {
+        if(type == '1'){
+            $scope.type = 1;
+        } else {
+            $scope.type = 2;
+        }
+            $scope.popover.show($event);
      };
 
      $scope.closePopover = function() {
