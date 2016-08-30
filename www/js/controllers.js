@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout,dateFilter,$location,$cordovaSQLite) {
-    $scope.select = []; 
+    $scope.day_list = []; 
     var currentNow = new Date();
     $scope.year = currentNow.getFullYear();
     $scope.month = ("0" + (currentNow.getMonth() + 1)).slice(-2);
@@ -9,31 +9,23 @@ angular.module('starter.controllers', [])
     $scope.hours = currentNow.getHours();
     $scope.minutes = currentNow.getMinutes();
     
-    $scope.settingsList = [
+    
+    //지출리스트
+    $scope.expenditureList = [ 
                            { text: 'Taxi', id: 1 },
                            { text: 'Sic', id: 2 },
                            { text: 'Bus', id: 3 },
                            { text: 'Caffe', id: 4 },
                            { text: '직접입력', id: 5 }
                          ];
-    /*$scope.insert = function(firstname, lastname) {
-        var query = "INSERT INTO people (firstname, lastname) VALUES (?,?)";
-        $cordovaSQLite.execute(db, query, [firstname, lastname]).then(function(res) {
-            console.log("INSERT ID -> " + res.insertId);
-        }, function (err) {
-            console.error(err);
-        });
-    }
- 
-    $scope.select = function(lastname) {
-        var query = "SELECT * FROM people";
-        $cordovaSQLite.execute(db, query).then(function(res) {
-            console.log(res);
-        }, function (err) {
-            console.error(err);
-        });
-    }*/
-  
+    //수입리스트
+    $scope.incomeList = [ 
+                           { text: '용돈', id: 1 },
+                           { text: '월급', id: 2 },
+                           { text: '팁', id: 3 },
+                           { text: '적금', id: 4 },
+                           { text: '직접입력', id: 5 }
+                         ];
     
   //캘린더 옵션
   $scope.loginData = {};
@@ -53,12 +45,12 @@ angular.module('starter.controllers', [])
     }
   });
 
-  // Triggered in the login modal to close it
+  // 모달 닫기
   $scope.closeLogin = function() {
     $scope.modal.hide();
   };
   
-  // Open the login modal
+  // 모달 열기
   $scope.login = function() {
     $scope.modal.show();
   };
@@ -89,15 +81,15 @@ angular.module('starter.controllers', [])
       $cordovaSQLite.execute(db, query).then(function(res) {
           var len = res.rows.length;
           for (var i = 0; i< len ; ++i){
-              $scope.select.push({category: res.rows[i].category, 
+              $scope.day_list.push({category: res.rows[i].category, 
                                   price : res.rows[i].price,
                                   date : res.rows[i].date})
           }
-          console.log($scope.select);
+          console.log($scope.day_list);
       }, function (err) {
           console.error(err);
       });
-      $location.path("/app/search");
+      $location.path("/app/day");
       
       
      /* for(var i = 0; i < $scope.day_total_array.length; i++){
@@ -127,7 +119,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope,$ionicPopover,$location) {
+.controller('PlaylistsCtrl', function($scope,$ionicPopover,$location,$cordovaSQLite) {
     $scope.data = {
             clientSide: 'ng'
           };
@@ -158,7 +150,21 @@ angular.module('starter.controllers', [])
      $scope.$on('popover.removed', function() {
         // Execute action
      });
-     
+     $scope.day_list_query = function(){
+         var query = "SELECT * FROM kake";
+         $cordovaSQLite.execute(db, query).then(function(res) {
+             var len = res.rows.length;
+             for (var i = 0; i< len ; ++i){
+                 $scope.day_list.push({category: res.rows[i].category, 
+                                     price : res.rows[i].price,
+                                     date : res.rows[i].date})
+             }
+             console.log($scope.day_list);
+         }, function (err) {
+             console.error(err);
+         });
+     }
+     $scope.day_list_query();
   
 })
 

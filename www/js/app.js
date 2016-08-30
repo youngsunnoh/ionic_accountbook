@@ -41,11 +41,11 @@ angular.module('starter', ['ionic', 'starter.controllers','pickadate','ngCordova
     controller: 'AppCtrl'
   })
 
-  .state('app.search', {
-    url: '/search',
+  .state('app.day', {
+    url: '/day',
     views: {
       'menuContent': {
-        templateUrl: 'templates/search.html'
+        templateUrl: 'templates/day.html'
       }
     }
   })
@@ -67,7 +67,7 @@ angular.module('starter', ['ionic', 'starter.controllers','pickadate','ngCordova
         }
       }
     })
-
+  
   .state('app.single', {
     url: '/playlists/:playlistId',
     views: {
