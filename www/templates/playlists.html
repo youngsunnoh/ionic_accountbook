@@ -1,8 +1,31 @@
 <ion-view cache-view="false" view-title="{{year}}-{{month}}-{{day}}  {{hours}}:{{minutes}}"> 
 <ion-header-bar class="bar-subheader bar-assertive">
-<h1 class="title">Subheader</h1>
+<h1 class="title">부제목</h1>
 </ion-header-bar> 
 <ion-content> 
+ <div class="tabs tabs-icon-only tabs-calm">
+    <!-- tab 색상리스트
+    tabs-default
+tabs-light
+tabs-stable
+tabs-positive
+tabs-calm
+tabs-balanced
+tabs-energized
+tabs-assertive
+tabs-royal
+tabs-dark -->
+   <a class="tab-item" href="#/app/day">
+        <i class="icon ion-android-more-vertical"></i>
+   </a>
+   <a class="tab-item" href="#/app/month">
+        <i class="icon ion-grid" ></i>
+   </a>
+   <a class="tab-item" ng-click="login()">
+        <i class="icon ion-calendar"></i>
+   </a>
+</div>
+
 <!-- <ion-list>
       <ion-item ng-repeat="playlist in playlists" href="#/app/playlists/{{playlist.id}}">
         {{playlist.title}}

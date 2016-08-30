@@ -144,7 +144,28 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope,$ionicPopover,$location,$cordovaSQLite) {
+.controller('PlaylistsCtrl', function($scope,$ionicPopover,$location,$cordovaSQLite,$ionicModal) {
+  //캘린더 모달
+    $ionicModal.fromTemplateUrl('templates/calendar.html', {
+      scope: $scope
+    }).then(function(modal) {
+      $scope.modal = modal;
+      $scope.calender_day = function(date){
+          console.log(date); //일별지출내용쿼리들어갈곳
+      }
+    });
+
+    // 모달 닫기
+    $scope.closeLogin = function() {
+      $scope.modal.hide();
+    };
+    
+    // 모달 열기
+    $scope.login = function() {
+      $scope.modal.show();
+    };
+    
+    
     $ionicPopover.fromTemplateUrl('popover.html', {
         scope: $scope
      }).then(function(popover) {
