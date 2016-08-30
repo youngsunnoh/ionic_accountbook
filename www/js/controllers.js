@@ -2,13 +2,24 @@ angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout,dateFilter,$location,$cordovaSQLite) {
     $scope.day_list = []; 
+    $scope.month_list = [{id: 1, src: "http://placehold.it/50x50"},
+                         {id: 2, src: "http://placehold.it/50x50"},
+                         {id: 3, src: "http://placehold.it/50x50"},
+                         {id: 4, src: "http://placehold.it/50x50"},
+                         {id: 5, src: "http://placehold.it/50x50"},
+                         {id: 6, src: "http://placehold.it/50x50"},
+                         {id: 7, src: "http://placehold.it/50x50"},
+                         {id: 8, src: "http://placehold.it/50x50"},
+                         {id: 9, src: "http://placehold.it/50x50"},
+                         {id: 10, src: "http://placehold.it/50x50"},
+                         {id: 11, src: "http://placehold.it/50x50"},
+                         {id: 12, src: "http://placehold.it/50x50"}];
     var currentNow = new Date();
     $scope.year = currentNow.getFullYear();
     $scope.month = ("0" + (currentNow.getMonth() + 1)).slice(-2);
     $scope.day = ("0" + currentNow.getDate()).slice(-2);
     $scope.hours = currentNow.getHours();
     $scope.minutes = currentNow.getMinutes();
-    
     
     //지출리스트
     $scope.expenditureList = [ 
@@ -98,6 +109,20 @@ angular.module('starter.controllers', [])
           }
       }*/
   }
+  $scope.day_list_query = function(){
+      var query = "SELECT * FROM kake";
+      $cordovaSQLite.execute(db, query).then(function(res) {
+          var len = res.rows.length;
+          for (var i = 0; i< len ; ++i){
+              $scope.day_list.push({category: res.rows[i].category, 
+                                  price : res.rows[i].price,
+                                  date : res.rows[i].date})
+          }
+          console.log($scope.day_list);
+      }, function (err) {
+          console.error(err);
+      });
+  }
   $scope.checkbox = function(category) {
       if(category.text == '직접입력'){ // popover html 컨트롤
           $scope.inputshow = 1;
@@ -152,21 +177,6 @@ angular.module('starter.controllers', [])
      $scope.$on('popover.removed', function() {
         // Execute action
      });
-     $scope.day_list_query = function(){
-         var query = "SELECT * FROM kake";
-         $cordovaSQLite.execute(db, query).then(function(res) {
-             var len = res.rows.length;
-             for (var i = 0; i< len ; ++i){
-                 $scope.day_list.push({category: res.rows[i].category, 
-                                     price : res.rows[i].price,
-                                     date : res.rows[i].date})
-             }
-             console.log($scope.day_list);
-         }, function (err) {
-             console.error(err);
-         });
-     }
-     $scope.day_list_query();
   
 })
 

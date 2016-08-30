@@ -1,0 +1,18 @@
+<ion-view view-title="month">
+<ion-content ng-init="loadImages()">
+    <div class="row" ng-repeat="image in month_list" ng-if="$index % 4 === 0">
+        <div class="col col-25" ng-if="$index < month_list.length">
+            <img ng-src="{{month_list[$index].src}}" width="100%" />
+        </div>
+        <div class="col col-25" ng-if="$index + 1 < month_list.length">
+            <img ng-src="{{month_list[$index + 1].src}}" width="100%" />
+        </div>
+        <div class="col col-25" ng-if="$index + 2 < month_list.length">
+            <img ng-src="{{month_list[$index + 2].src}}" width="100%" />
+        </div>
+        <div class="col col-25" ng-if="$index + 3 < month_list.length">
+            <img ng-src="{{month_list[$index + 3].src}}" width="100%" />
+        </div>
+    </div>
+</ion-content>
+</ion-view>

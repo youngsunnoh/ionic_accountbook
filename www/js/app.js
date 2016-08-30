@@ -50,11 +50,11 @@ angular.module('starter', ['ionic', 'starter.controllers','pickadate','ngCordova
     }
   })
 
-  .state('app.browse', {
-      url: '/browse',
+  .state('app.month', {
+      url: '/month',
       views: {
         'menuContent': {
-          templateUrl: 'templates/browse.html'
+          templateUrl: 'templates/month.html'
         }
       }
     })
