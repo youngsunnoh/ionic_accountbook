@@ -6,9 +6,14 @@
     </div>
   </ion-header-bar>
   <ion-content>
-      <div pickadate ng-model="date" min-date="minDate" ng-click="calender_day(date)" max-date="maxDate" disabled-dates='disabledDates'></div>
+      <div pickadate ng-model="date" min-date="minDate" ng-click="calendar_day(date)" max-date="maxDate" disabled-dates='disabledDates'></div>
       <div class="selected-date">
-        dSelected date is {{date || '(no date selected)'}}
+        Selected date is {{date || '(no date selected)'}}
       </div>
+      <div class="card">
+  <div class="item item-text-wrap" ng-repeat="list in calendar_day_list">
+    {{list.category}}{{list.price}}
+  </div>
+</div>
   </ion-content>
 </ion-modal-view>

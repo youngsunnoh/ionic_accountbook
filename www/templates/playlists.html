@@ -59,7 +59,10 @@ tabs-dark -->
     <ion-toggle ng-repeat="item in settingsList" ng-model="item.checked" ng-checked="item.checked" ng-change="category(item.text)"> {{ item.text }} </ion-toggle>
     </div> -->
  <ion-item style="background-color: skyblue; color: white;font-size:20px;" ng-click="plus(price1)">
-          <h1 style="text-align:center;color:white;">??</h1>
+          <h1 style="text-align:center;color:white;">Add</h1>
+ </ion-item>
+ <ion-item style="background-color: skyblue; color: white;font-size:20px;" ng-click="del()">
+          <h1 style="text-align:center;color:white;">All Delete</h1>
  </ion-item>
     <!--  <div class="item">
           <pre ng-bind="settingsList | json"></pre> 
@@ -88,7 +91,9 @@ tabs-dark -->
         <div class="item">
           <pre ng-bind="emailNotification | json"></pre> 
         </div> -->
-</ion-content> </ion-view>
+</ion-content> 
+
+</ion-view>
 <script id="popover.html" type="text/ng-template">
 <ion-popover-view>
 <ion-content ng-show="type == 1">

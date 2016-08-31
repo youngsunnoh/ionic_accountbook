@@ -1,7 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout,dateFilter,$location,$cordovaSQLite) {
-    $scope.day_list = []; 
+.controller('AppCtrl', function($scope, $ionicModal, $timeout,dateFilter,$location,$cordovaSQLite,$ionicSlideBoxDelegate) {
     $scope.month_list = [{id: 1, src: "http://placehold.it/50x50"},
                          {id: 2, src: "http://placehold.it/50x50"},
                          {id: 3, src: "http://placehold.it/50x50"},
@@ -88,18 +87,6 @@ angular.module('starter.controllers', [])
           console.error(err);
       });
       
-      var query = "SELECT * FROM kake";
-      $cordovaSQLite.execute(db, query).then(function(res) {
-          var len = res.rows.length;
-          for (var i = 0; i< len ; ++i){
-              $scope.day_list.push({category: res.rows[i].category, 
-                                  price : res.rows[i].price,
-                                  date : res.rows[i].date})
-          }
-          console.log($scope.day_list);
-      }, function (err) {
-          console.error(err);
-      });
       $location.path("/app/day");
       
       
@@ -110,6 +97,7 @@ angular.module('starter.controllers', [])
       }*/
   }
   $scope.day_list_query = function(){
+      $scope.day_list = [];
       var query = "SELECT * FROM kake";
       $cordovaSQLite.execute(db, query).then(function(res) {
           var len = res.rows.length;
@@ -132,6 +120,25 @@ angular.module('starter.controllers', [])
           $scope.category = category.text;
       }
   };
+  $scope.calendar_day = function(date){
+      $scope.when_day = date;
+      $scope.calendar_day_list = [];
+      var query = "SELECT category,sum(price) as price_total FROM kake where date = ? group by category";
+      $cordovaSQLite.execute(db, query,[$scope.when_day]).then(function(res) {
+          var len = res.rows.length;
+          for (var i = 0; i< len ; ++i){
+              $scope.calendar_day_list.push({category: res.rows[i].category, 
+                  price : res.rows[i].price_total
+                  })
+              }
+          console.log($scope.calendar_day_list);
+          /*$scope.calendar_day_total = res.rows[0].price_total*/
+          },
+          
+      function (err) {
+          console.error(err);
+      });
+  }
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
     console.log('Doing login', $scope.loginData);
@@ -144,17 +151,37 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope,$ionicPopover,$location,$cordovaSQLite,$ionicModal) {
+.controller('PlaylistsCtrl', function($scope,$ionicPopover,$location,$cordovaSQLite,$ionicModal,$ionicSlideBoxDelegate) {
   //캘린더 모달
+    $scope.next = function() {
+        $ionicSlideBoxDelegate.next();
+      };
+      $scope.previous = function() {
+        $ionicSlideBoxDelegate.previous();
+      };
+
+      // Called each time the slide changes
+      $scope.slideChanged = function(index) {
+        $scope.slideIndex = index;
+      };
+    
+    
     $ionicModal.fromTemplateUrl('templates/calendar.html', {
       scope: $scope
     }).then(function(modal) {
       $scope.modal = modal;
-      $scope.calender_day = function(date){
-          console.log(date); //일별지출내용쿼리들어갈곳
-      }
     });
-
+    
+    $scope.del = function() {
+        var query = "delete from kake";
+        $cordovaSQLite.execute(db, query).then(function(res) {
+            console.log(res);
+        }, function (err) {
+            console.error(err);
+        });
+    }
+    
+    
     // 모달 닫기
     $scope.closeLogin = function() {
       $scope.modal.hide();
