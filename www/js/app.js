@@ -7,7 +7,7 @@
 
 var db;
 angular.module('starter', ['ionic', 'starter.controllers','pickadate','ngCordova'])
-.run(function($ionicPlatform, $cordovaSQLite) {
+.run(function($ionicPlatform, $cordovaSQLite, $cordovaDevice) {
     $ionicPlatform.ready(function() {
     
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -15,17 +15,17 @@ angular.module('starter', ['ionic', 'starter.controllers','pickadate','ngCordova
     if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
-
     }
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
     if (window.cordova) {
-        db = $cordovaSQLite.openDB({ name: "my.db" }); //device
-      }else{
+        db = $cordovaSQLite.openDB({name: 'sample.db' , location : 'default'});
+        console.log(db);
+    }else{
         db = window.openDatabase("my.db", '1', 'my', 1024 * 1024 * 100); // browser
-      }
+    }
     $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS kake (id integer primary key, category text, price text, date date)");
     
   });

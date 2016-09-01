@@ -1,6 +1,5 @@
 angular.module('starter.controllers', [])
-
-.controller('AppCtrl', function($scope, $ionicModal, $timeout,dateFilter,$location,$cordovaSQLite,$ionicSlideBoxDelegate) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout,dateFilter,$location,$cordovaSQLite,$ionicSlideBoxDelegate,$ionicPlatform,$cordovaDevice) {
     $scope.month_list = [{id: 1, src: "http://placehold.it/50x50"},
                          {id: 2, src: "http://placehold.it/50x50"},
                          {id: 3, src: "http://placehold.it/50x50"},
@@ -81,10 +80,14 @@ angular.module('starter.controllers', [])
           }, true);*/
       
       var query = "INSERT INTO kake (category, price, date) VALUES (?,?,?)";
-      $cordovaSQLite.execute(db, query, [$scope.category, price, res]).then(function(res) {
-          console.log("INSERT ID -> " + res.insertId);
-      }, function (err) {
-          console.error(err);
+      $ionicPlatform.ready(function () { 
+          $ionicPlatform.ready(function () {
+              $cordovaSQLite.execute(db, query, [$scope.category, price, res]).then(function (res) {
+                  console.log("INSERT ID -> " + res.insertId);
+              }, function (err) {
+                  console.error(err);
+              });
+          });
       });
       
       $location.path("/app/day");
@@ -98,13 +101,11 @@ angular.module('starter.controllers', [])
   }
   $scope.day_list_query = function(){
       $scope.day_list = [];
-      var query = "SELECT * FROM kake";
+      var query = "SELECT category,price,date FROM kake";
       $cordovaSQLite.execute(db, query).then(function(res) {
           var len = res.rows.length;
           for (var i = 0; i< len ; ++i){
-              $scope.day_list.push({category: res.rows[i].category, 
-                                  price : res.rows[i].price,
-                                  date : res.rows[i].date})
+              $scope.day_list.push({category: res.rows.item(i).category,price : res.rows.item(i).price,date : res.rows.item(i).date})
           }
           console.log($scope.day_list);
       }, function (err) {
@@ -127,8 +128,8 @@ angular.module('starter.controllers', [])
       $cordovaSQLite.execute(db, query,[$scope.when_day]).then(function(res) {
           var len = res.rows.length;
           for (var i = 0; i< len ; ++i){
-              $scope.calendar_day_list.push({category: res.rows[i].category, 
-                  price : res.rows[i].price_total
+              $scope.calendar_day_list.push({category: res.rows.item(i).category, 
+                  price : res.rows.item(i).price_total
                   })
               }
           console.log($scope.calendar_day_list);
