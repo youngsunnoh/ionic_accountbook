@@ -1,5 +1,5 @@
 angular.module('starter.controllers', [])
-.controller('AppCtrl', function($scope, $ionicModal, $timeout,dateFilter,$location,$cordovaSQLite,$ionicSlideBoxDelegate,$ionicPlatform,$cordovaDevice) {
+.controller('AppCtrl', function($scope, $ionicPopup, $ionicModal, $timeout,dateFilter,$location,$cordovaSQLite,$ionicSlideBoxDelegate,$ionicPlatform,$cordovaDevice) {
     $scope.month_list = [{id: 1, src: "http://placehold.it/50x50"},
                          {id: 2, src: "http://placehold.it/50x50"},
                          {id: 3, src: "http://placehold.it/50x50"},
@@ -63,9 +63,39 @@ angular.module('starter.controllers', [])
   $scope.login = function() {
     $scope.modal.show();
   };
-
+  $scope.showAlert = function() {
+      var alertPopup = $ionicPopup.alert({
+        title: 'Don\'t eat that!',
+        template: 'It might taste good'
+      });
+      alertPopup.then(function(res) {
+        console.log('Thank you for not eating my delicious ice cream cone');
+      });
+    };
   $scope.plus = function(price){ // 배열로 day값을 넣고 그날 배열의 합만 불러온다.(카테고리,날짜시간,금액)
       var res = $scope.year+"-"+$scope.month+"-"+$scope.day;
+      $scope.price = price;
+      console.log(price);
+      if($scope.price == '' || $scope.price == undefined || $scope.price == null){
+          $ionicPopup.alert({
+              title: '',
+              template: '금액을 입력해주세요.'
+            });
+      } else {
+          var query = "INSERT INTO kake (category, price, date) VALUES (?,?,?)";
+          $ionicPlatform.ready(function () { 
+              $ionicPlatform.ready(function () {
+                  $cordovaSQLite.execute(db, query, [$scope.category, price, res]).then(function (res) {
+                      console.log("INSERT ID -> " + res.insertId);
+                  }, function (err) {
+                      console.error(err);
+                  });
+              });
+          });
+          $location.path("/app/day");
+      }
+      
+      
       /*var plus_array = {category : $scope.category , day: res , price: price}*/
       /*$scope.day_total_array.push(plus_array); //현재날짜 카테고리별로 금액을 배열로 저장한다.
 */      /*console.log($scope.day_total_array);*/
@@ -78,20 +108,6 @@ angular.module('starter.controllers', [])
           if (newValue != oldValue)
               $scope.month_total = 0;
           }, true);*/
-      
-      var query = "INSERT INTO kake (category, price, date) VALUES (?,?,?)";
-      $ionicPlatform.ready(function () { 
-          $ionicPlatform.ready(function () {
-              $cordovaSQLite.execute(db, query, [$scope.category, price, res]).then(function (res) {
-                  console.log("INSERT ID -> " + res.insertId);
-              }, function (err) {
-                  console.error(err);
-              });
-          });
-      });
-      
-      $location.path("/app/day");
-      
       
      /* for(var i = 0; i < $scope.day_total_array.length; i++){
           if($scope.day_total_array[i].day == 25){
